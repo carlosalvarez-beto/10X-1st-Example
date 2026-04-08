@@ -6,7 +6,25 @@
   <title>Nuevo servidor local</title>
 </head>
 <body>
-  <h1>Hola, este es tu nuevo servidor local</h1>
+  <h1>Ciao, este es tu nuevo servidor local</h1>
   <p>Si ves esta pagina, Node.js ya esta funcionando.</p>
+  <p>Esto es un servidor Local Host.</p>
+  <p>
+    <button type="button" id="btn">haz clic acá</button>
+  </p>
+  <p id="estado"></p>
+
+  <script>
+    window.addEventListener("DOMContentLoaded", function () {
+      const btn = document.getElementById("btn");
+      const estado = document.getElementById("estado");
+      if (!btn) return;
+      btn.addEventListener("click", function () {
+        const mensaje = "el JavaScript está funcionando correctamente";
+        alert(mensaje);
+        if (estado) estado.textContent = mensaje;
+      });
+    });
+  </script>
 </body>
 </html>

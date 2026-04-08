@@ -11,10 +11,18 @@
   <p>
     <button type="button" id="btn">haz clic acá</button>
   </p>
+  <p id="estado"></p>
 
   <script>
-    document.getElementById("btn").addEventListener("click", function () {
-      alert("el JavaScript está funcionando correctamente");
+    window.addEventListener("DOMContentLoaded", function () {
+      const btn = document.getElementById("btn");
+      const estado = document.getElementById("estado");
+      if (!btn) return;
+      btn.addEventListener("click", function () {
+        const mensaje = "el JavaScript está funcionando correctamente";
+        alert(mensaje);
+        if (estado) estado.textContent = mensaje;
+      });
     });
   </script>
 </body>
