@@ -2,7 +2,9 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 
-const PORT = 3000;
+const DEFAULT_PORT = Number(process.env.PORT) || 3000;
+
+let currentPort = DEFAULT_PORT;
 
 const server = http.createServer((req, res) => {
   const file = req.url === "/" ? "index.html" : req.url.slice(1);
@@ -22,6 +24,21 @@ const server = http.createServer((req, res) => {
   });
 });
 
-server.listen(PORT, () => {
-  console.log("Abre http://localhost:" + PORT);
+function startServer(port) {
+  currentPort = port;
+  server.listen(port, () => {
+    console.log("Abre http://localhost:" + port);
+  });
+}
+
+server.on("error", (err) => {
+  if (err.code === "EADDRINUSE") {
+    const nextPort = currentPort + 1;
+    console.log("Puerto ocupado. Probando puerto " + nextPort + "...");
+    setTimeout(() => startServer(nextPort), 200);
+    return;
+  }
+  throw err;
 });
+
+startServer(DEFAULT_PORT);
